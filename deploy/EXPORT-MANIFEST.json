@@ -64,8 +64,8 @@
     },
     {
       "path": "client/macos/README.md",
-      "sha256": "c0279357c867373e62675b4235ea60da5f0428a4ac246b79bda3b51e18097a1f",
-      "bytes": 11733
+      "sha256": "e9ba65636a1f85773aab51cb12ee04a1d9d763d66ac96ed8469fe3abc6aa0d0e",
+      "bytes": 12102
     },
     {
       "path": "client/macos/install.command",
