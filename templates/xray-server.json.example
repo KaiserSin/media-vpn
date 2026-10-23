@@ -1,0 +1,113 @@
+{
+  "log": {
+    "loglevel": "warning",
+    "access": "none"
+  },
+  "inbounds": [
+    {
+      "tag": "happ-xhttp",
+      "listen": "127.0.0.1",
+      "port": 18082,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "00000000-0000-4000-8000-000000000001"
+          }
+        ],
+        "decryption": "<VLESS_DECRYPTION>"
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "security": "none",
+        "xhttpSettings": {
+          "path": "/<XHTTP_PATH>",
+          "mode": "packet-up",
+          "extra": {
+            "uplinkHTTPMethod": "GET",
+            "uplinkDataPlacement": "header",
+            "uplinkDataKey": "X-Data",
+            "uplinkChunkSize": 2048,
+            "scMaxEachPostBytes": 2048,
+            "xPaddingBytes": "100-200",
+            "scMaxBufferedPosts": 64,
+            "serverMaxHeaderBytes": 16384,
+            "sessionIDPlacement": "query",
+            "sessionIDKey": "x_session",
+            "seqPlacement": "query",
+            "seqKey": "x_seq",
+            "xPaddingObfsMode": true,
+            "xPaddingPlacement": "header",
+            "xPaddingHeader": "X-Request-ID",
+            "xPaddingMethod": "tokenish"
+          }
+        }
+      }
+    },
+    {
+      "tag": "media-primary",
+      "listen": "127.0.0.1",
+      "port": 18083,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "00000000-0000-4000-8000-000000000001"
+          }
+        ],
+        "decryption": "<VLESS_DECRYPTION>"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "wsSettings": {
+          "path": "/<PRIMARY_WS_PATH>"
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {
+        "domainStrategy": "UseIP"
+      }
+    },
+    {
+      "tag": "blocked",
+      "protocol": "blackhole"
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "0.0.0.0/8",
+          "10.0.0.0/8",
+          "100.64.0.0/10",
+          "127.0.0.0/8",
+          "169.254.0.0/16",
+          "172.16.0.0/12",
+          "192.168.0.0/16",
+          "224.0.0.0/4",
+          "240.0.0.0/4",
+          "::/128",
+          "::1/128",
+          "fc00::/7",
+          "fe80::/10",
+          "ff00::/8"
+        ],
+        "outboundTag": "blocked"
+      },
+      {
+        "type": "field",
+        "port": "25",
+        "network": "tcp",
+        "outboundTag": "blocked"
+      }
+    ]
+  }
+}

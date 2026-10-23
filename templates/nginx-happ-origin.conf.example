@@ -1,0 +1,79 @@
+server {
+    listen 443 ssl http2;
+    server_name vpn.example.com;
+    ssl_certificate /etc/happ-certbot/live/happ-origin/fullchain.pem;
+    ssl_certificate_key /etc/happ-certbot/live/happ-origin/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_session_cache shared:HappTLS:1m;
+    ssl_session_timeout 1d;
+    ssl_session_tickets off;
+    server_tokens off;
+    access_log off;
+    large_client_header_buffers 4 16k;
+
+    location = /status.txt {
+        default_type text/plain;
+        add_header Cache-Control "no-store" always;
+        return 200 "ok\n";
+    }
+
+    location = /healthz {
+        default_type text/plain;
+        add_header Cache-Control "no-store" always;
+        return 200 "ok\n";
+    }
+
+    location ^~ /<ORIGINAL_TRANSPORT_PATH> {
+        proxy_pass http://127.0.0.1:18082;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header Connection "";
+        proxy_set_header X-Forwarded-For "";
+        proxy_buffering off;
+        proxy_request_buffering off;
+        proxy_cache off;
+        proxy_read_timeout 300s;
+        proxy_send_timeout 300s;
+        add_header X-Accel-Buffering "no" always;
+        add_header Cache-Control "no-store" always;
+    }
+
+    # BEGIN MEDIA SUBSCRIPTION
+    location = /s/<SUBSCRIPTION_TOKEN>/profile.json {
+        alias /var/lib/happ-subscription/happ.json;
+        default_type application/json;
+        add_header Cache-Control "no-store, private" always;
+        add_header X-Robots-Tag "noindex, nofollow" always;
+        add_header profile-title "Media" always;
+        add_header profile-update-interval "24" always;
+    }
+    location = /s/<SUBSCRIPTION_TOKEN>/happ.json {
+        alias /var/lib/happ-subscription/happ.json;
+        default_type application/json;
+        add_header Cache-Control "no-store, private" always;
+        add_header X-Robots-Tag "noindex, nofollow" always;
+        add_header profile-title "Media" always;
+        add_header profile-update-interval "24" always;
+    }
+    # END MEDIA SUBSCRIPTION
+
+    # BEGIN MEDIA PRIMARY
+    location = /<PRIMARY_WS_PATH> {
+        proxy_pass http://127.0.0.1:18083;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header X-Forwarded-For "";
+        proxy_buffering off;
+        proxy_read_timeout 300s;
+        proxy_send_timeout 300s;
+    }
+    # END MEDIA PRIMARY
+
+
+
+
+
+    location / { return 404; }
+}

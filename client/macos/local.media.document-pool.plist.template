@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>local.media.document-pool</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>__USER_HOME__/Library/Application Support/Media Test 10/media-adapter-msr</string>
+		<string>--client</string>
+		<string>--url-list-file</string>
+		<string>__USER_HOME__/Library/Application Support/Media Test 10/documents.urls</string>
+		<string>--stream-relay</string>
+		<string>--stream-key-file</string>
+		<string>__USER_HOME__/Library/Application Support/Media Test 10/stream-relay.key</string>
+		<string>--doc-bootstrap-file</string>
+		<string>__USER_HOME__/Library/Application Support/Media Test 10/bootstrap.json</string>
+		<string>--stream-chunk-bytes</string>
+		<string>1024</string>
+		<string>--stream-window-bytes</string>
+		<string>4194304</string>
+		<string>--stream-rto</string>
+		<string>5s</string>
+		<string>--max-connections</string>
+		<string>128</string>
+		<string>--queue-packets</string>
+		<string>128</string>
+		<string>--min-ready</string>
+		<string>10</string>
+		<string>--ready-timeout</string>
+		<string>120s</string>
+		<string>--socks5</string>
+		<string>127.0.0.1:19180</string>
+		<string>--stats-interval</string>
+		<string>15s</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<dict>
+		<key>SuccessfulExit</key>
+		<false/>
+	</dict>
+	<key>ThrottleInterval</key>
+	<integer>60</integer>
+	<key>ProcessType</key>
+	<string>Background</string>
+	<key>Umask</key>
+	<integer>63</integer>
+	<key>WorkingDirectory</key>
+	<string>__USER_HOME__/Library/Application Support/Media Test 10</string>
+	<key>StandardOutPath</key>
+	<string>__USER_HOME__/Library/Application Support/Media Test 10/msr.stdout.log</string>
+	<key>StandardErrorPath</key>
+	<string>__USER_HOME__/Library/Application Support/Media Test 10/msr.stderr.log</string>
+</dict>
+</plist>

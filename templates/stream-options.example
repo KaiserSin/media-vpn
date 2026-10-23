@@ -1,0 +1,4 @@
+DOC_FILE=/etc/media-doc-speed/documents-10.urls
+CHUNK_BYTES=1024
+WINDOW_BYTES=4194304
+RTO=5s

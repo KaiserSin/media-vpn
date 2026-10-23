@@ -1,0 +1,86 @@
+{
+  "export_date": "2026-10-23",
+  "scope": [
+    "deploy/",
+    "client/macos/"
+  ],
+  "source_snapshot": "2026-09-08/vpn-vds-ssh-vpn",
+  "verification": {
+    "python_syntax_files": 8,
+    "remote_deployment_template_syntax": "pass",
+    "shell_syntax": "pass",
+    "launchagent_matches_installer": "pass",
+    "live_endpoint_and_secret_marker_scan": "pass",
+    "live_execution_performed": false
+  },
+  "parameterization": [
+    "MEDIA_EXISTING_NGINX_SITE",
+    "MEDIA_ORIGIN_IP",
+    "MEDIA_CDN_HOST",
+    "MEDIA_SSH_HOST",
+    "MEDIA_WORK_DIR",
+    "MEDIA_XRAY"
+  ],
+  "files": [
+    {
+      "path": "deploy/README.md",
+      "sha256": "768b6214b36ecbbbb0460e66c4063f35ab9d6ba196fdde8030249420a8274869",
+      "bytes": 8847
+    },
+    {
+      "path": "deploy/local/build-media-auto.py",
+      "sha256": "2ecfd3716d6265d3534456a2570b754dc7c8971e2fd3ff51b7a0680cca9eab64",
+      "bytes": 1712
+    },
+    {
+      "path": "deploy/local/deploy-media-auto.py",
+      "sha256": "eadcefc7021da26c62c0b8bccd4c7b54d02b706abc0f26425f1a95540fa7e598",
+      "bytes": 2171
+    },
+    {
+      "path": "deploy/server/add-media-primary.py",
+      "sha256": "19ddbb424e12124e098fb045bdf0a590f08a5814151c575b1d4c99f342e833eb",
+      "bytes": 2402
+    },
+    {
+      "path": "deploy/server/configure-origin.py",
+      "sha256": "f4a3c5453cd25f2b486523397e0eca54314daed5782940726b85a0ef3008b7db",
+      "bytes": 6522
+    },
+    {
+      "path": "deploy/server/prepare-origin.py",
+      "sha256": "65add88e51a277a7de631aad5633578f1e819843f15c689dce03dd9e3d157c1a",
+      "bytes": 2248
+    },
+    {
+      "path": "deploy/server/publish-happ.py",
+      "sha256": "de92a243522bf7da8223a80ad5f1387a6f7ecfbe6383c85131da14a1f856f21b",
+      "bytes": 5394
+    },
+    {
+      "path": "deploy/server/update-media-path.py",
+      "sha256": "88cacd41c3f653d53102c5c88183e658e6a7398ff158a4dd783bca0c4a336bf9",
+      "bytes": 1402
+    },
+    {
+      "path": "client/macos/README.md",
+      "sha256": "c0279357c867373e62675b4235ea60da5f0428a4ac246b79bda3b51e18097a1f",
+      "bytes": 11733
+    },
+    {
+      "path": "client/macos/install.command",
+      "sha256": "4ce9a27f3e9ebfe2b3570fab8b1d7ff84bd25eb03182915926c747d63c315bd6",
+      "bytes": 785
+    },
+    {
+      "path": "client/macos/install.py",
+      "sha256": "005287fa58858deb949c1a2ab38ca247015de4455697575b87e68747786af479",
+      "bytes": 19705
+    },
+    {
+      "path": "client/macos/local.media.document-pool.plist.template",
+      "sha256": "84a1ecad74688cfd3ce4144f9c2cd389db6700e345ac25ed63a03f0933a833ba",
+      "bytes": 1969
+    }
+  ]
+}

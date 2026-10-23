@@ -1,0 +1,151 @@
+{
+  "remarks": "Media Test 10 MUX",
+  "log": {
+    "loglevel": "warning",
+    "access": "none"
+  },
+  "inbounds": [
+    {
+      "tag": "socks",
+      "listen": "127.0.0.1",
+      "port": 10808,
+      "protocol": "socks",
+      "settings": {
+        "auth": "noauth",
+        "udp": true
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ],
+        "routeOnly": true
+      }
+    },
+    {
+      "tag": "http",
+      "listen": "127.0.0.1",
+      "port": 10809,
+      "protocol": "http",
+      "settings": {},
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ],
+        "routeOnly": true
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "primary",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "10.203.0.1",
+            "port": 443,
+            "users": [
+              {
+                "id": "00000000-0000-4000-8000-000000000001",
+                "encryption": "<VLESS_ENCRYPTION>"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "vpn.example.com",
+          "fingerprint": "chrome",
+          "alpn": [
+            "http/1.1"
+          ]
+        },
+        "wsSettings": {
+          "path": "/<PRIMARY_WS_PATH>"
+        }
+      },
+      "mux": {
+        "enabled": true,
+        "concurrency": 128
+      },
+      "proxySettings": {
+        "tag": "openflux-local",
+        "transportLayer": true
+      }
+    },
+    {
+      "tag": "openflux-local",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 19180
+          }
+        ]
+      },
+      "mux": {
+        "enabled": false
+      }
+    },
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {}
+    }
+  ],
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "domain": [
+          "domain:onlyoffice.disk.yandex.net",
+          "full:disk.yandex.ru",
+          "full:docs.yandex.ru"
+        ],
+        "outboundTag": "direct"
+      },
+      {
+        "type": "field",
+        "ip": [
+          "192.0.2.1/32",
+          "87.250.250.50/32",
+          "87.250.251.212/32"
+        ],
+        "outboundTag": "direct"
+      },
+      {
+        "type": "field",
+        "network": "tcp,udp",
+        "ip": [
+          "8.8.4.4/32",
+          "8.8.8.8/32"
+        ],
+        "port": "53",
+        "outboundTag": "direct"
+      },
+      {
+        "type": "field",
+        "network": "tcp,udp",
+        "outboundTag": "primary"
+      }
+    ]
+  },
+  "dns": {
+    "hosts": {
+      "cloudflare-dns.com": "1.1.1.1"
+    },
+    "servers": [
+      "https://cloudflare-dns.com/dns-query"
+    ],
+    "queryStrategy": "UseIPv4"
+  }
+}
