@@ -1,6 +1,6 @@
 # Source provenance
 
-This directory is a private archive of the modified Media OpenFlux source used
+This directory is an archive of the modified Media OpenFlux source used
 by the user's Media Test 10 transport. It is not an unmodified upstream release.
 
 - Upstream repository: <https://github.com/p1neappleXpress/OpenFlux>
